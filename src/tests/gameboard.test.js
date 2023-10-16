@@ -18,6 +18,6 @@ test("Gameboard. Ship sunk.", () => {
 	gameboard.addShip(1, "N", [4, 1]);
 	gameboard.receiveAttack([4, 1]);
 	expect(gameboard.missed).toEqual([]);
-	expect(gameboard.sunkShips).toEqual(1);
+	expect(gameboard.areAllSunk()).toEqual(true);
 	expect(gameboard.hits).toEqual([[4, 1]]);
 });
