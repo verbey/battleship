@@ -6,6 +6,7 @@ test("Ship creation. Western direction.", () => {
 		direction: "W",
 		position: [5, 5],
 		tiles: [[2, 5], [3, 5], [4, 5], [5, 5]],
+		sunk: false
 	});
 });
 
@@ -15,6 +16,7 @@ test("Ship creation. Northern direction.", () => {
 		direction: "N",
 		position: [4, 1],
 		tiles: [[4, 1], [4, 2], [4, 3]],
+		sunk: false
 	});
 });
 
@@ -24,6 +26,7 @@ test("Ship creation. Eastern direction.", () => {
 		direction: "E",
 		position: [2, 3],
 		tiles: [[2, 3], [3, 3]],
+		sunk: false
 	});
 });
 
@@ -33,6 +36,7 @@ test("Ship creation. Southern direction.", () => {
 		direction: "S",
 		position: [4, 4],
 		tiles: [[4, 4], [4, 3], [4, 2], [4, 1]],
+		sunk: false
 	});
 });
 
@@ -90,6 +94,7 @@ test("Ship attack. Missed.", () => {
 			[3, 3],
 			[4, 3],
 		],
+		sunk: false
 	});
 });
 
@@ -104,5 +109,18 @@ test("Ship attack. Hit.", () => {
 			[2, 3],
 			[4, 3],
 		],
+		sunk: false
+	});
+});
+
+test("Ship attack. Sunk.", () => {
+	const ship = new Ship(1, "E", [2, 3]);
+	ship.hit([3, 3]);
+	expect(ship).toEqual({
+		size: 1,
+		direction: "E",
+		position: [2, 3],
+		tiles: [],
+		sunk: true
 	});
 });
