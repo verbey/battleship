@@ -57,7 +57,7 @@ test("Ship creation. Eastern direction overflow.", () => {
 
 test("Ship creation. Northern direction overflow.", () => {
 	expect(() => {
-		new Ship(3, "N", [1, 1]);
+		new Ship(3, "N", [1, 9]);
 	}).toThrowError("Can't create a ship facing north here.");
 });
 
@@ -69,7 +69,7 @@ test("Ship creation. Western direction overflow.", () => {
 
 test("Ship creation. Southern direction overflow.", () => {
 	expect(() => {
-		new Ship(2, "S", [5, 7]);
+		new Ship(2, "S", [5, 0]);
 	}).toThrowError("Can't create a ship facing south here.");
 });
 
