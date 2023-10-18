@@ -13,8 +13,8 @@ test("Ship creation. Northern direction.", () => {
 	expect(new Ship(3, "N", [4, 1])).toEqual({
 		size: 3,
 		direction: "N",
-		position: [4, 1],
-		tiles: [[4, 1], [4, 2], [4, 3]],
+		position: [4, 3],
+		tiles: [[4, 3], [4, 2], [4, 1]],
 	});
 });
 
@@ -31,8 +31,8 @@ test("Ship creation. Southern direction.", () => {
 	expect(new Ship(4, "S", [4, 4])).toEqual({
 		size: 4,
 		direction: "S",
-		position: [4, 4],
-		tiles: [[4, 4], [4, 3], [4, 2], [4, 1]],
+		position: [4, 1],
+		tiles: [[4, 1], [4, 2], [4, 3], [4, 4]],
 	});
 });
 
@@ -62,7 +62,7 @@ test("Ship creation. Eastern direction overflow.", () => {
 
 test("Ship creation. Northern direction overflow.", () => {
 	expect(() => {
-		new Ship(3, "N", [1, 7]);
+		new Ship(3, "N", [1, 1]);
 	}).toThrowError("Can't create a ship facing north here.");
 });
 
@@ -74,7 +74,7 @@ test("Ship creation. Western direction overflow.", () => {
 
 test("Ship creation. Southern direction overflow.", () => {
 	expect(() => {
-		new Ship(2, "S", [5, 0]);
+		new Ship(2, "S", [5, 7]);
 	}).toThrowError("Can't create a ship facing south here.");
 });
 
