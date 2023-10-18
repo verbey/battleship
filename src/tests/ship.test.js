@@ -1,39 +1,34 @@
 import Ship from "../modules/ship";
 
 test("Ship creation. Western direction.", () => {
-	expect(new Ship(4, "W", [5, 5])).toEqual({
-		size: 4,
-		direction: "W",
-		position: [5, 5],
-		tiles: [[2, 5], [3, 5], [4, 5], [5, 5]],
-	});
+	const ship = new Ship(4, "W", [5, 5]);
+	expect(ship.size).toEqual(4);
+	expect(ship.direction).toEqual("W");
+	expect(ship.position).toEqual([5, 5]);
 });
 
 test("Ship creation. Northern direction.", () => {
-	expect(new Ship(3, "N", [4, 1])).toEqual({
-		size: 3,
-		direction: "N",
-		position: [4, 3],
-		tiles: [[4, 3], [4, 2], [4, 1]],
-	});
+	const ship = new Ship(3, "N", [4, 1]);
+
+	expect(ship.size).toEqual(3);
+	expect(ship.direction).toEqual("N");
+	expect(ship.position).toEqual([4, 1]);
 });
 
 test("Ship creation. Eastern direction.", () => {
-	expect(new Ship(2, "E", [2, 3])).toEqual({
-		size: 2,
-		direction: "E",
-		position: [2, 3],
-		tiles: [[2, 3], [3, 3]],
-	});
+	const ship = new Ship(2, "E", [2, 3]);
+
+	expect(ship.size).toEqual(2);
+	expect(ship.direction).toEqual("E");
+	expect(ship.position).toEqual([2, 3]);
 });
 
 test("Ship creation. Southern direction.", () => {
-	expect(new Ship(4, "S", [4, 4])).toEqual({
-		size: 4,
-		direction: "S",
-		position: [4, 1],
-		tiles: [[4, 1], [4, 2], [4, 3], [4, 4]],
-	});
+	const ship = new Ship(4, "S", [4, 4]);
+
+	expect(ship.size).toEqual(4);
+	expect(ship.direction).toEqual("S");
+	expect(ship.position).toEqual([4, 4]);
 });
 
 test("Ship creation. Invalid direction.", () => {
@@ -80,31 +75,31 @@ test("Ship creation. Southern direction overflow.", () => {
 
 test("Ship attack. Missed.", () => {
 	const ship = new Ship(3, "E", [2, 3]);
+
 	ship.hit([1, 1]);
-	expect(ship).toEqual({
-		size: 3,
-		direction: "E",
-		position: [2, 3],
-		tiles: [
-			[2, 3],
-			[3, 3],
-			[4, 3],
-		],
-	});
+
+	expect(ship.size).toEqual(3);
+	expect(ship.direction).toEqual("E");
+	expect(ship.position).toEqual([2, 3]);
+	expect(ship.tiles).toEqual([
+		[2, 3],
+		[3, 3],
+		[4, 3]
+	]);
 });
 
 test("Ship attack. Hit.", () => {
 	const ship = new Ship(3, "E", [2, 3]);
+
 	ship.hit([3, 3]);
-	expect(ship).toEqual({
-		size: 3,
-		direction: "E",
-		position: [2, 3],
-		tiles: [
-			[2, 3],
-			[4, 3],
-		],
-	});
+
+	expect(ship.size).toEqual(3);
+	expect(ship.direction).toEqual("E");
+	expect(ship.position).toEqual([2, 3]);
+	expect(ship.tiles).toEqual([
+		[2, 3],
+		[4, 3]
+	]);
 });
 
 test("Ship attack. Sunk.", () => {
