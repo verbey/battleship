@@ -1,4 +1,4 @@
-import Ship from "./src/modules/ship";
+import Ship from "../modules/ship";
 
 test("Ship creation. Western direction.", () => {
 	expect(new Ship(4, "W", [5, 5])).toEqual({
