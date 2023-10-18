@@ -104,6 +104,8 @@ test("Ship attack. Hit.", () => {
 
 test("Ship attack. Sunk.", () => {
 	const ship = new Ship(1, "E", [2, 3]);
+
 	ship.hit([2, 3]);
+
 	expect(ship.isSunk()).toEqual(true);
 });
