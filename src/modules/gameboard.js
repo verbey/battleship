@@ -9,6 +9,8 @@ export default class Gameboard {
 		}
 
 		this.ships = [];
+		this.missed = [];
+		this.hits = [];
 	}
 
 	addShip(ship) {
@@ -20,5 +22,23 @@ export default class Gameboard {
 		else if (ship.direction === "S" && ship.positionY - ship.size < 0) throw new Error("Can't create a ship facing south here.");
 
 		this.ships.push(ship);
+
+	}
+
+	receiveAttack(coordinates) {
+		for (let i = 0; i < this.ships.length; i++) {
+			const result = this.ships[i].hit(coordinates);
+			if (this.ships[i].tiles.length === 0) this.ships.splice(i, 1);
+			if (result) {
+				this.hits.push(coordinates);
+				return;
+			}
+		}
+		this.missed.push(coordinates);
+	}
+
+	areAllSunk() {
+		if (this.ships.length === 0) return true;
+		else return false;
 	}
 }
