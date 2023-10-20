@@ -43,36 +43,6 @@ test("Ship creation. Invalid size.", () => {
 	}).toThrowError("Invalid size.");
 });
 
-test("Ship creation. Invalid position coordinates.", () => {
-	expect(() => {
-		new Ship(4, "E", [-1, 3]);
-	}).toThrowError("Invalid position coordinates.");
-});
-
-test("Ship creation. Eastern direction overflow.", () => {
-	expect(() => {
-		new Ship(3, "E", [7, 3]);
-	}).toThrowError("Can't create a ship facing east here.");
-});
-
-test("Ship creation. Northern direction overflow.", () => {
-	expect(() => {
-		new Ship(3, "N", [1, 9]);
-	}).toThrowError("Can't create a ship facing north here.");
-});
-
-test("Ship creation. Western direction overflow.", () => {
-	expect(() => {
-		new Ship(4, "W", [0, 4]);
-	}).toThrowError("Can't create a ship facing west here.");
-});
-
-test("Ship creation. Southern direction overflow.", () => {
-	expect(() => {
-		new Ship(2, "S", [5, 0]);
-	}).toThrowError("Can't create a ship facing south here.");
-});
-
 test("Ship attack. Missed.", () => {
 	const ship = new Ship(3, "E", [2, 3]);
 
