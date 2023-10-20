@@ -1,3 +1,5 @@
+import Ship from "./ship";
+
 export default class Gameboard {
 	constructor(x, y) {
 		this.board = [];
@@ -13,14 +15,15 @@ export default class Gameboard {
 		this.hits = [];
 	}
 
-	addShip(ship) {
-		if (ship.positionX < 0 || ship.positionX > this.board.length || ship.positionY < 0 || ship.positionY > this.board.length) throw new Error("Invalid position coordinates.");
+	addShip(size, direction, position) {
+		if (position[0] < 0 || position[0] > this.board.length || position[1] < 0 || position[1] > this.board.length) throw new Error("Invalid position coordinates.");
 
-		if (ship.direction === "W" && ship.positionX - ship.size < 0) throw new Error("Can't create a ship facing west here.");
-		else if (ship.direction === "E" && ship.positionX + ship.size > this.board.length) throw new Error("Can't create a ship facing east here.");
-		else if (ship.direction === "N" && ship.positionY + ship.size > this.board.length) throw new Error("Can't create a ship facing north here.");
-		else if (ship.direction === "S" && ship.positionY - ship.size < 0) throw new Error("Can't create a ship facing south here.");
+		if (direction === "W" && position[0] - size < 0) throw new Error("Can't create a ship facing west here.");
+		else if (direction === "E" && position[0] + size > this.board.length) throw new Error("Can't create a ship facing east here.");
+		else if (direction === "N" && position[1] + size > this.board.length) throw new Error("Can't create a ship facing north here.");
+		else if (direction === "S" && position[1] - size < 0) throw new Error("Can't create a ship facing south here.");
 
+		const ship = new Ship(size, direction, position);
 		this.ships.push(ship);
 
 	}
