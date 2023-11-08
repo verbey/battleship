@@ -1,4 +1,7 @@
-class Interface {
+import Gameboard from "./gameboard";
+import Player from "./player";
+
+export default class Interface {
 	constructor() {
 		this.left = document.querySelector(".left");
 		this.right = document.querySelector(".right");
@@ -24,7 +27,7 @@ class Interface {
 			const shipThreeSize = document.createElement("div");
 			shipThreeSize.classList.add("three");
 			this.right.appendChild(shipThreeSize);
-			ship.shipThreeSize.addEventListener("click", (event) => {
+			shipThreeSize.addEventListener("click", (event) => {
 				this.selectedShipSize = 3;
 				event.target.classList.add("selected");
 			});
