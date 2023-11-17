@@ -1,9 +1,18 @@
+:root {
+	--standard-padding: 8px;
+}
+
 html {
 	height: 100svh;
 }
 
 body {
+	height: 100%;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#content {
+	height: 100%;
 }
 
 /* I have to use the direct ascendant selector because otherwise it would be used */
@@ -11,5 +20,12 @@ body {
 #content>h1 {
 	text-align: center;
 	font-size: 2.5rem;
-	padding: 8px;
+	padding: var(--standard-padding);
+}
+
+.game {
+	display: flex;
+	justify-content: space-between;
+	height: 100%;
+	padding: var(--standard-padding);
 }
