@@ -70,9 +70,13 @@ export default class Interface {
 
 			this.opponentGameboard = new Gameboard(10, 10);
 
+			playerNameInput.value = "";
+
 			while (this.left.lastElementChild) {
 				this.left.removeChild(this.left.lastElementChild);
 			}
+
+
 
 			for (let i = 0; i < this.opponentGameboard.board.length; i++) {
 				for (let j = 0; j < this.opponentGameboard.board[i].length; j++) {
@@ -89,9 +93,11 @@ export default class Interface {
 			startGame.addEventListener("click", () => {
 				this.startGame();
 			});
+			startGame.textContent = "Start Game";
 			this.right.appendChild(startGame);
 			event.target.remove();
 		});
+		finishPlayerCreation.textContent = "Done";
 		this.right.appendChild(finishPlayerCreation);
 	}
 }
