@@ -1,0 +1,15 @@
+html {
+	height: 100svh;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/* I have to use the direct ascendant selector because otherwise it would be used */
+/* since there is a similar rule in reset.css */
+#content>h1 {
+	text-align: center;
+	font-size: 2.5rem;
+	padding: 8px;
+}
