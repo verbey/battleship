@@ -29,3 +29,15 @@ body {
 	height: 100%;
 	padding: var(--standard-padding);
 }
+
+.left {
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: repeat(8, 1fr);
+}
+
+.left>div {
+	width: 9vmin;
+	height: 9vmin;
+	border: 1px solid black;
+}
