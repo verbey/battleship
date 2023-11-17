@@ -32,12 +32,14 @@ body {
 
 .left {
 	display: grid;
-	grid-template-columns: repeat(8, 1fr);
-	grid-template-rows: repeat(8, 1fr);
+	grid-template-columns: repeat(10, 8vmin);
+	grid-template-rows: repeat(10, 8vmin);
+	width: 50vw;
+	justify-content: center;
 }
 
 .left>div {
-	width: 9vmin;
-	height: 9vmin;
+	width: 8vmin;
+	height: 8vmin;
 	border: 1px solid black;
 }
