@@ -68,8 +68,6 @@ export default class Interface {
 		finishPlayerCreation.addEventListener("click", (event) => {
 			this.player = new Player(playerNameInput.value);
 
-			// TODO: clear all gameboard data on screen and change the recreate
-			// the button to create opponent
 			this.opponentGameboard = new Gameboard(10, 10);
 
 			while (this.left.lastElementChild) {
