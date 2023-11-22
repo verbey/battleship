@@ -1,5 +1,6 @@
 :root {
 	--standard-padding: 8px;
+	--tile-size: 8vmin;
 }
 
 html {
@@ -40,7 +41,31 @@ body {
 }
 
 .left>div {
-	width: 8vmin;
-	height: 8vmin;
+	width: var(--tile-size);
+	height: var(--tile-size);
 	border: 1px solid black;
+}
+
+.one,
+.two,
+.three,
+.four {
+	height: var(--tile-size);
+	background-color: cadetblue;
+}
+
+.one {
+	width: var(--tile-size);
+}
+
+.two {
+	width: calc(2*var(--tile-size));
+}
+
+.three {
+	width: calc(3*var(--tile-size));
+}
+
+.four {
+	width: calc(4*var(--tile-size));
 }
