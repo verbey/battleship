@@ -13,6 +13,9 @@ export default class Interface {
 	createPlayers() {
 		this.playerGameboard = new Gameboard(10, 10);
 		const playerNameInput = document.createElement("input");
+		playerNameInput.type = "text";
+		playerNameInput.placeholder = "Enter your name";
+		playerNameInput.classList.add("playerNameInput");
 		this.right.appendChild(playerNameInput);
 
 		const shipSelectionContainer = document.createElement("div");
