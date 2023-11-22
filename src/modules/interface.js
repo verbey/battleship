@@ -15,9 +15,13 @@ export default class Interface {
 		const playerNameInput = document.createElement("input");
 		this.right.appendChild(playerNameInput);
 
+		const shipSelectionContainer = document.createElement("div");
+		shipSelectionContainer.classList.add("shipSelectionContainer");
+		this.right.appendChild(shipSelectionContainer);
+
 		const shipFourSize = document.createElement("div");
 		shipFourSize.classList.add("four");
-		this.right.appendChild(shipFourSize);
+		shipSelectionContainer.appendChild(shipFourSize);
 		shipFourSize.addEventListener("click", (event) => {
 			this.selectedShipSize = 4;
 			event.target.classList.add("selected");
@@ -26,7 +30,7 @@ export default class Interface {
 		for (let i = 0; i < 2; i++) {
 			const shipThreeSize = document.createElement("div");
 			shipThreeSize.classList.add("three");
-			this.right.appendChild(shipThreeSize);
+			shipSelectionContainer.appendChild(shipThreeSize);
 			shipThreeSize.addEventListener("click", (event) => {
 				this.selectedShipSize = 3;
 				event.target.classList.add("selected");
@@ -36,7 +40,7 @@ export default class Interface {
 		for (let i = 0; i < 3; i++) {
 			const shipTwoSize = document.createElement("div");
 			shipTwoSize.classList.add("two");
-			this.right.appendChild(shipTwoSize);
+			shipSelectionContainer.appendChild(shipTwoSize);
 			shipTwoSize.addEventListener("click", (event) => {
 				this.selectedShipSize = 2;
 				event.target.classList.add("selected");
@@ -46,7 +50,7 @@ export default class Interface {
 		for (let i = 0; i < 4; i++) {
 			const shipOneSize = document.createElement("div");
 			shipOneSize.classList.add("one");
-			this.right.appendChild(shipOneSize);
+			shipSelectionContainer.appendChild(shipOneSize);
 			shipOneSize.addEventListener("click", (event) => {
 				this.selectedShipSize = 1;
 				event.target.classList.add("selected");
