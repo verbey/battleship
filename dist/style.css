@@ -16,8 +16,8 @@ body {
 	height: 100%;
 }
 
-/* I have to use the direct ascendant selector because otherwise it would be used */
-/* since there is a similar rule in reset.css */
+/* I have to use the direct ascendant selector because otherwise the rule */
+/* will not be used, since there is a similar rule in reset.css */
 #content>h1 {
 	text-align: center;
 	font-size: 2.5rem;
