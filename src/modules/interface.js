@@ -24,44 +24,45 @@ export default class Interface {
 
 		const shipFourSize = document.createElement("div");
 		shipFourSize.classList.add("four");
+		shipFourSize.classList.add("0");
 		shipFourSize.draggable = true;
 		shipSelectionContainer.appendChild(shipFourSize);
 
-		shipFourSize.addEventListener("click", (event) => {
-			this.selectedShipSize = 4;
-			event.target.classList.add("selected");
+		shipFourSize.addEventListener("dragstart", (e) => {
+			e.dataTransfer.setData("text", e.target.classList);
 		});
 
 		for (let i = 0; i < 2; i++) {
 			const shipThreeSize = document.createElement("div");
 			shipThreeSize.classList.add("three");
+			shipThreeSize.classList.add(`${i}`);
 			shipThreeSize.draggable = true;
 			shipSelectionContainer.appendChild(shipThreeSize);
-			shipThreeSize.addEventListener("click", (event) => {
-				this.selectedShipSize = 3;
-				event.target.classList.add("selected");
+			shipThreeSize.addEventListener("dragstart", (e) => {
+				e.dataTransfer.setData("text", e.target.classList);
 			});
 		}
 
 		for (let i = 0; i < 3; i++) {
 			const shipTwoSize = document.createElement("div");
 			shipTwoSize.classList.add("two");
+			shipTwoSize.classList.add(`${i}`);
 			shipTwoSize.draggable = true;
 			shipSelectionContainer.appendChild(shipTwoSize);
-			shipTwoSize.addEventListener("click", (event) => {
-				this.selectedShipSize = 2;
-				event.target.classList.add("selected");
+			shipTwoSize.addEventListener("dragstart", (e) => {
+				e.dataTransfer.setData("text", e.target.classList);
 			});
+
 		}
 
 		for (let i = 0; i < 4; i++) {
 			const shipOneSize = document.createElement("div");
 			shipOneSize.classList.add("one");
+			shipOneSize.classList.add(`${i}`);
 			shipOneSize.draggable = true;
 			shipSelectionContainer.appendChild(shipOneSize);
-			shipOneSize.addEventListener("click", (event) => {
-				this.selectedShipSize = 1;
-				event.target.classList.add("selected");
+			shipOneSize.addEventListener("dragstart", (e) => {
+				e.dataTransfer.setData("text", e.target.classList);
 			});
 		}
 
@@ -70,8 +71,13 @@ export default class Interface {
 				const tile = document.createElement("div");
 				tile.classList.add("tile");
 				this.left.appendChild(tile);
-				tile.addEventListener("click", () => {
-					this.playerGameboard.addShip(this.selectedShipSize, this.selectedShipDirection, [i, j]);
+				tile.addEventListener("dragover", (e) => {
+					e.preventDefault();
+				});
+
+				tile.addEventListener("drop", (e) => {
+					const data = e.dataTransfer.getData("text");
+					e.target.appendChild(document.getElementsByClassName(data)[0]);
 				});
 			}
 		}
