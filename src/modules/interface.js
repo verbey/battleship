@@ -24,7 +24,9 @@ export default class Interface {
 
 		const shipFourSize = document.createElement("div");
 		shipFourSize.classList.add("four");
+		shipFourSize.draggable = true;
 		shipSelectionContainer.appendChild(shipFourSize);
+
 		shipFourSize.addEventListener("click", (event) => {
 			this.selectedShipSize = 4;
 			event.target.classList.add("selected");
@@ -33,6 +35,7 @@ export default class Interface {
 		for (let i = 0; i < 2; i++) {
 			const shipThreeSize = document.createElement("div");
 			shipThreeSize.classList.add("three");
+			shipThreeSize.draggable = true;
 			shipSelectionContainer.appendChild(shipThreeSize);
 			shipThreeSize.addEventListener("click", (event) => {
 				this.selectedShipSize = 3;
@@ -43,6 +46,7 @@ export default class Interface {
 		for (let i = 0; i < 3; i++) {
 			const shipTwoSize = document.createElement("div");
 			shipTwoSize.classList.add("two");
+			shipTwoSize.draggable = true;
 			shipSelectionContainer.appendChild(shipTwoSize);
 			shipTwoSize.addEventListener("click", (event) => {
 				this.selectedShipSize = 2;
@@ -53,6 +57,7 @@ export default class Interface {
 		for (let i = 0; i < 4; i++) {
 			const shipOneSize = document.createElement("div");
 			shipOneSize.classList.add("one");
+			shipOneSize.draggable = true;
 			shipSelectionContainer.appendChild(shipOneSize);
 			shipOneSize.addEventListener("click", (event) => {
 				this.selectedShipSize = 1;
