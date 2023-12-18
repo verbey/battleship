@@ -101,9 +101,6 @@ export default class Interface {
 					const tile = document.createElement("div");
 					tile.classList.add("tile");
 					this.left.appendChild(tile);
-					tile.addEventListener("click", () => {
-						this.opponentGameboard.addShip(this.selectedShipSize, this.selectedShipDirection, [i, j]);
-					});
 				}
 			}
 
