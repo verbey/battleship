@@ -6,6 +6,12 @@ test("Gameboard creation. Ship creation.", () => {
 	expect(gameboard.ships.length).toEqual(1);
 });
 
+test("Gameboard creation. Ships overlap.", () => {
+	const gameboard = new Gameboard(10, 10);
+	gameboard.addShip(3, "N", [4, 1]);
+	expect(() => gameboard.addShip(3, "N", [4, 1])).toThrowError("Ships overlap.");
+});
+
 test("Gameboard creation. Invalid position coordinates.", () => {
 	const gameboard = new Gameboard(10, 10);
 	expect(() => gameboard.addShip(3, "W", [-1, 5])).toThrowError("Invalid position coordinates.");
