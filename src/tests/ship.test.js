@@ -37,6 +37,12 @@ test("Ship creation. Invalid direction.", () => {
 	}).toThrowError("Invalid direction.");
 });
 
+test("Ship creation. Invalid direction. String that contains letter of valid direction.", () => {
+	expect(() => {
+		new Ship(4, "XabcWabc", [4, 4]);
+	}).toThrowError("Invalid direction.");
+});
+
 test("Ship creation. Invalid size.", () => {
 	expect(() => {
 		new Ship(5, "E", [2, 3]);

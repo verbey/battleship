@@ -8,7 +8,7 @@ export default class Ship {
 		if (size < 1 || size > 4) throw new Error("Invalid size.");
 		else this.size = size;
 
-		if (! /W|E|S|N/.test(direction)) throw new Error("Invalid direction.");
+		if (! /^(W|E|S|N)$/.test(direction)) throw new Error("Invalid direction.");
 		else this.direction = direction;
 
 		this.tiles = [];
