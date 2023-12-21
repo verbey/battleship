@@ -9,7 +9,8 @@ test("Gameboard creation. Ship creation.", () => {
 test("Gameboard creation. Ships overlap.", () => {
 	const gameboard = new Gameboard(10, 10);
 	gameboard.addShip(3, "N", [4, 1]);
-	expect(() => gameboard.addShip(3, "N", [4, 1])).toThrowError("Ships overlap.");
+	console.log(gameboard.ships);
+	expect(() => gameboard.addShip(3, "N", [3, 1])).toThrowError("Ships overlap.");
 });
 
 test("Gameboard creation. Invalid position coordinates.", () => {

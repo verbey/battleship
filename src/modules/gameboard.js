@@ -16,7 +16,7 @@ export default class Gameboard {
 	}
 
 	addShip(size, direction, position) {
-		if (position[0] < 0 || position[0] > this.board.length || position[1] < 0 || position[1] > this.board.length || position[0]) throw new Error("Invalid position coordinates.");
+		if (position[0] < 0 || position[0] > this.board.length || position[1] < 0 || position[1] > this.board.length) throw new Error("Invalid position coordinates.");
 
 		if (direction === "W" && position[0] - size < 0) throw new Error("Can't create a ship facing west here.");
 		else if (direction === "E" && position[0] + size > this.board.length) throw new Error("Can't create a ship facing east here.");
@@ -35,6 +35,7 @@ export default class Gameboard {
 	isShipTile(coordinates) {
 		for (let i = 0; i < this.ships.length; i++) {
 			const index = this.ships[i].tiles.findIndex(tileCoordinates => {
+				console.log(tileCoordinates, coordinates);
 				return tileCoordinates[0] === coordinates[0] && tileCoordinates[1] === coordinates[1];
 			});
 			if (index === -1) return false;
