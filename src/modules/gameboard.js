@@ -11,8 +11,6 @@ export default class Gameboard {
 		}
 
 		this.ships = [];
-		this.missed = [];
-		this.hits = [];
 	}
 
 	addShip(size, direction, position) {
@@ -45,18 +43,14 @@ export default class Gameboard {
 
 	receiveAttack(coordinates) {
 		for (let i = 0; i < this.ships.length; i++) {
-			const result = this.ships[i].hit(coordinates);
-			if (this.ships[i].tiles.length === 0) this.ships.splice(i, 1);
-			if (result) {
-				this.hits.push(coordinates);
-				return;
-			}
+			this.ships[i].hit(coordinates);
 		}
-		this.missed.push(coordinates);
 	}
 
 	areAllSunk() {
-		if (this.ships.length === 0) return true;
-		else return false;
+		for (let i = 0; i < this.ships.length; i++) {
+			if (this.ships[i].tiles.length !== this.ships[i].hitTiles.length) return false;
+		}
+		return true;
 	}
 }

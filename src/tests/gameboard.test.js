@@ -45,7 +45,6 @@ test("Gameboard. Missed.", () => {
 	const gameboard = new Gameboard(10, 10);
 	gameboard.addShip(1, "N", [4, 1]);
 	gameboard.receiveAttack([0, 0]);
-	expect(gameboard.missed).toEqual([[0, 0]]);
 	expect(gameboard.areAllSunk()).toEqual(false);
 });
 
@@ -53,7 +52,5 @@ test("Gameboard. Ship sunk.", () => {
 	const gameboard = new Gameboard(10, 10);
 	gameboard.addShip(1, "N", [4, 1]);
 	gameboard.receiveAttack([4, 1]);
-	expect(gameboard.missed).toEqual([]);
 	expect(gameboard.areAllSunk()).toEqual(true);
-	expect(gameboard.hits).toEqual([[4, 1]]);
 });
