@@ -1,9 +1,7 @@
 export default class Ship {
 	constructor(size, direction, position) {
-		const [positionX, positionY] = position;
-
-		this.positionX = positionX;
-		this.positionY = positionY;
+		this.position = position;
+		console.log(this.position);
 
 		if (size < 1 || size > 4) throw new Error("Invalid size.");
 		else this.size = size;
@@ -13,12 +11,14 @@ export default class Ship {
 
 		this.tiles = [];
 		for (let i = 0; i < this.size; i++) {
-			if (direction === "W") this.tiles.push([positionX, positionY - i]);
-			else if (direction === "E") this.tiles.push([positionX, positionY
+			if (direction === "W") this.tiles.push([position[0], position[1] - i]);
+			else if (direction === "E") this.tiles.push([position[0], position[1]
 				+ i]);
-			else if (direction === "N") this.tiles.push([positionX - i, positionY]);
-			else if (direction === "S") this.tiles.push([positionX + i, positionY]);
+			else if (direction === "N") this.tiles.push([position[0] - i, position[1]]);
+			else if (direction === "S") this.tiles.push([position[0] + i, position[1]]);
 		}
+
+		this.hitTiles = [];
 
 	}
 
@@ -28,13 +28,13 @@ export default class Ship {
 		});
 		if (index === -1) return false;
 		else {
-			this.tiles.splice(index, 1);
+			this.hitTiles.push(coordinates);
 			return true;
 		}
 	}
 
 	isSunk() {
-		if (this.length - this.tiles.length === 0) return false;
-		else return true;
+		if (this.hitTiles.length === this.tiles.length) return true;
+		else return false;
 	}
 }

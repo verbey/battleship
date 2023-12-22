@@ -59,23 +59,26 @@ test("Ship attack. Missed.", () => {
 	expect(ship.position).toEqual([2, 3]);
 	expect(ship.tiles).toEqual([
 		[2, 3],
-		[3, 3],
-		[4, 3]
+		[2, 4],
+		[2, 5]
 	]);
 });
 
 test("Ship attack. Hit.", () => {
 	const ship = new Ship(3, "E", [2, 3]);
 
-	ship.hit([3, 3]);
+	ship.hit([2, 4]);
 
 	expect(ship.size).toEqual(3);
 	expect(ship.direction).toEqual("E");
 	expect(ship.position).toEqual([2, 3]);
 	expect(ship.tiles).toEqual([
 		[2, 3],
-		[4, 3]
+		[2, 4],
+		[2, 5]
 	]);
+	expect(ship.isSunk()).toEqual(false);
+	expect(ship.hitTiles).toEqual([[2, 4]]);
 });
 
 test("Ship attack. Sunk.", () => {
