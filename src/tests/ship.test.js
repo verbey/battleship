@@ -88,3 +88,14 @@ test("Ship attack. Sunk.", () => {
 
 	expect(ship.isSunk()).toEqual(true);
 });
+
+test("Ship attack. Doesn't duplicate hits.", () => {
+	const ship = new Ship(1, "E", [2, 3]);
+
+	ship.hit([2, 3]);
+	ship.hit([2, 3]);
+	ship.hit([2, 3]);
+
+	expect(ship.isSunk()).toEqual(true);
+	expect(ship.hitTiles).toEqual([[2, 3]]);
+});

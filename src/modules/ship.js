@@ -23,13 +23,18 @@ export default class Ship {
 	}
 
 	hit(coordinates) {
+		// Searches whether coordinates belong to a ship. If yes, proceeds to check if the coordinates were
+		// already hit. If not, adds the coordinates to this.hitTiles
 		const index = this.tiles.findIndex(tileCoordinates => {
 			return tileCoordinates[0] === coordinates[0] && tileCoordinates[1] === coordinates[1];
 		});
-		if (index === -1) return false;
-		else {
-			this.hitTiles.push(coordinates);
-			return true;
+		if (index !== -1) {
+			const index = this.hitTiles.findIndex(tileCoordinates => {
+				return tileCoordinates[0] === coordinates[0] && tileCoordinates[1] === coordinates[1];
+			});
+			if (index === -1) {
+				this.hitTiles.push(coordinates);
+			}
 		}
 	}
 
