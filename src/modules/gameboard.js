@@ -11,6 +11,7 @@ export default class Gameboard {
 		}
 
 		this.ships = [];
+		this.targetedTiles = [];
 	}
 
 	addShip(size, direction, position) {
@@ -33,7 +34,6 @@ export default class Gameboard {
 	isShipTile(coordinates) {
 		for (let i = 0; i < this.ships.length; i++) {
 			const index = this.ships[i].tiles.findIndex(tileCoordinates => {
-				console.log(tileCoordinates, coordinates);
 				return tileCoordinates[0] === coordinates[0] && tileCoordinates[1] === coordinates[1];
 			});
 			if (index === -1) return false;
@@ -42,8 +42,15 @@ export default class Gameboard {
 	}
 
 	receiveAttack(coordinates) {
-		for (let i = 0; i < this.ships.length; i++) {
-			this.ships[i].hit(coordinates);
+		const index = this.targetedTiles.findIndex(tileCoordinates => {
+			return tileCoordinates[0] === coordinates[0] && tileCoordinates[1] === coordinates[1];
+		});
+
+		if (index === -1) {
+			this.targetedTiles.push(coordinates);
+			for (let i = 0; i < this.ships.length; i++) {
+				this.ships[i].hit(coordinates);
+			}
 		}
 	}
 
