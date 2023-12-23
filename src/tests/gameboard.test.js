@@ -46,6 +46,7 @@ test("Gameboard. Missed.", () => {
 	gameboard.addShip(1, "N", [4, 1]);
 	gameboard.receiveAttack([0, 0]);
 	expect(gameboard.areAllSunk()).toEqual(false);
+	expect(gameboard.targetedTiles).toEqual([[0, 0]]);
 });
 
 test("Gameboard. Ship sunk.", () => {
