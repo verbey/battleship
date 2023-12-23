@@ -23,8 +23,10 @@ test("Generate hit target. Targets available.", () => {
 
 test("Generate hit target. No targets available.", () => {
 	const player = new PLayer("John", "human");
-	let hits = [];
-	for (let i = 0; i < 100; i++) hits.push([]);
-	const target = player.generateHitTarget(hits);
+	let targetedTiles = [];
+	for (let i = 0; i < 10; i++) {
+		for (let j = 0; j < 10; j++) targetedTiles.push([i, j]);
+	}
+	const target = player.generateHitTarget(targetedTiles);
 	expect(target).toBeUndefined();
 });
