@@ -17,16 +17,16 @@ test("Player creation. Human", () => {
 
 test("Generate hit target. Targets available.", () => {
 	const player = new PLayer("John", "human");
-	const target = player.generateHitTarget([]);
+	const target = player.generateHitTarget(player.gameboard);
 	expect(target).toBeInstanceOf(Array);
 });
 
 test("Generate hit target. No targets available.", () => {
 	const player = new PLayer("John", "human");
-	let targetedTiles = [];
-	for (let i = 0; i < 10; i++) {
-		for (let j = 0; j < 10; j++) targetedTiles.push([i, j]);
+	player.gameboard.targetedTiles = [];
+	for (let i = 0; i < player.gameboard.yLimit; i++) {
+		for (let j = 0; j < player.gameboard.xLimit; j++) player.gameboard.targetedTiles.push([i, j]);
 	}
-	const target = player.generateHitTarget(targetedTiles);
+	const target = player.generateHitTarget(player.gameboard);
 	expect(target).toBeUndefined();
 });
