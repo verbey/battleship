@@ -1,7 +1,6 @@
 export default class Ship {
 	constructor(size, direction, position) {
 		this.position = position;
-		console.log(this.position);
 
 		if (size < 1 || size > 4) throw new Error("Invalid size.");
 		else this.size = size;
