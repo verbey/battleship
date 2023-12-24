@@ -6,8 +6,7 @@ export default class Interface {
 		this.left = document.querySelector(".left");
 		this.right = document.querySelector(".right");
 		this.generalMenu = document.querySelector(".generalMenu");
-		this.selectedShipSize = 1;
-		this.selectedShipDirection = "East";
+		this.selectedShipDirection = "E";
 	}
 
 	createPlayers() {
@@ -66,8 +65,8 @@ export default class Interface {
 			});
 		}
 
-		for (let i = 0; i < this.playerGameboard.board.length; i++) {
-			for (let j = 0; j < this.playerGameboard.board[i].length; j++) {
+		for (let i = 0; i < this.playerGameboard.yLimit; i++) {
+			for (let j = 0; j < this.playerGameboard.xLimit; j++) {
 				const tile = document.createElement("div");
 				tile.classList.add("tile");
 				this.left.appendChild(tile);
@@ -76,8 +75,13 @@ export default class Interface {
 				});
 
 				tile.addEventListener("drop", (e) => {
-					const data = e.dataTransfer.getData("text");
-					e.target.appendChild(document.getElementsByClassName(data)[0]);
+					const sizeString = e.dataTransfer.getData("text").split(" ")[0];
+					let size = 0;
+					if (sizeString === "one") size = 1;
+					else if (sizeString === "two") size = 2;
+					else if (sizeString === "three") size = 3;
+					else if (sizeString === "four") size = 4;
+					this.playerGameboard.addShip(size, this.selectedShipDirection, [i, j]);
 				});
 			}
 		}
@@ -96,8 +100,8 @@ export default class Interface {
 
 
 
-			for (let i = 0; i < this.opponentGameboard.board.length; i++) {
-				for (let j = 0; j < this.opponentGameboard.board[i].length; j++) {
+			for (let i = 0; i < this.opponentGameboard.yLimit; i++) {
+				for (let j = 0; j < this.opponentGameboard.xLimit; j++) {
 					const tile = document.createElement("div");
 					tile.classList.add("tile");
 					this.left.appendChild(tile);
