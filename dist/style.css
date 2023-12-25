@@ -46,26 +46,26 @@ body {
 	border: 1px solid black;
 }
 
-.one,
-.two,
-.three,
-.four {
+div[class^="one"],
+div[class^="two"],
+div[class^="three"],
+div[class^="four"] {
 	height: var(--tile-size);
 	background-color: cadetblue;
 }
 
-.one {
+div[class^="one"] {
 	width: var(--tile-size);
 }
 
-.two {
+div[class^="two"] {
 	width: calc(2*var(--tile-size));
 }
 
-.three {
+div[class^="three"] {
 	width: calc(3*var(--tile-size));
 }
 
-.four {
+div[class^="four"] {
 	width: calc(4*var(--tile-size));
 }
