@@ -11,8 +11,7 @@ export default class Ship {
 		this.tiles = [];
 		for (let i = 0; i < this.size; i++) {
 			if (direction === "W") this.tiles.push([position[0], position[1] - i]);
-			else if (direction === "E") this.tiles.push([position[0], position[1]
-				+ i]);
+			else if (direction === "E") this.tiles.push([position[0], position[1] + i]);
 			else if (direction === "N") this.tiles.push([position[0] - i, position[1]]);
 			else if (direction === "S") this.tiles.push([position[0] + i, position[1]]);
 		}
