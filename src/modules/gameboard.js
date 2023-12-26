@@ -54,4 +54,8 @@ export default class Gameboard {
 		}
 		return true;
 	}
+
+	removeAllShips() {
+		this.ships = [];
+	}
 }
