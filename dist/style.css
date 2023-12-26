@@ -51,21 +51,30 @@ div[class^="two"],
 div[class^="three"],
 div[class^="four"] {
 	height: var(--tile-size);
+	width: var(--tile-size);
 	background-color: cadetblue;
 }
 
-div[class^="one"] {
-	width: var(--tile-size);
-}
-
-div[class^="two"] {
+div[class^="two"].E {
 	width: calc(2*var(--tile-size));
 }
 
-div[class^="three"] {
+div[class^="two"].N {
+	height: calc(2*var(--tile-size));
+}
+
+div[class^="three"].E {
 	width: calc(3*var(--tile-size));
 }
 
-div[class^="four"] {
+div[class^="three"].N {
+	height: calc(3*var(--tile-size));
+}
+
+div[class^="four"].E {
 	width: calc(4*var(--tile-size));
+}
+
+div[class^="four"].N {
+	height: calc(4*var(--tile-size));
 }
