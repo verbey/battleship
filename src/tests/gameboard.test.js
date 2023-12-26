@@ -55,3 +55,14 @@ test("Gameboard. Ship sunk.", () => {
 	gameboard.receiveAttack([4, 1]);
 	expect(gameboard.areAllSunk()).toEqual(true);
 });
+
+test("Gameboard. Remove all ships.", () => {
+	const gameboard = new Gameboard(10, 10);
+	gameboard.addShip(1, "N", [4, 1]);
+	gameboard.addShip(1, "N", [4, 2]);
+	gameboard.addShip(1, "N", [4, 3]);
+	gameboard.addShip(1, "N", [4, 4]);
+	gameboard.addShip(1, "N", [4, 5]);
+	gameboard.removeAllShips();
+	expect(gameboard.ships).toEqual([]);
+});
