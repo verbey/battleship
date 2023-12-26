@@ -25,6 +25,10 @@ export default class Interface {
 		const finishPlayerCreation = document.createElement("button");
 		finishPlayerCreation.addEventListener("click", (event) => {
 
+			const allShips = document.querySelectorAll("div[class^='one'],div[class^='two'],div[class^='three'],div[class^='four']");
+			const allShipsArr = Array.from(allShips);
+
+			if (allShipsArr.some(ship => ship.parentNode.classList.value === "shipSelectionContainer")) return;
 			this.createPlayerGameboard();
 
 			this.player = new Player(playerNameInput.value);
