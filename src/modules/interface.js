@@ -53,6 +53,8 @@ export default class Interface {
 		const oldShipSelectionContainer = document.querySelector(".shipSelectionContainer");
 		if (oldShipSelectionContainer) oldShipSelectionContainer.remove();
 
+		document.querySelector(".rotateButton")?.remove();
+
 		for (let i = 0; i < 10; i++) {
 			for (let j = 0; j < 10; j++) {
 				const tile = document.createElement("div");
