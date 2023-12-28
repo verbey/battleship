@@ -124,10 +124,10 @@ export default class Interface {
 		rotateButton.textContent = "Rotate Ships";
 		rotateButton.classList.add("rotateButton");
 		rotateButton.addEventListener("click", () => {
-			const ships = document.querySelectorAll(".shipSelectionContainer .E");
+			const ships = document.querySelectorAll(".shipSelectionContainer div");
 			ships.forEach(ship => {
-				ship.classList.remove("E");
-				ship.classList.add("N");
+				ship.classList.toggle("E");
+				ship.classList.toggle("N");
 			});
 		});
 		this.right.appendChild(rotateButton);
