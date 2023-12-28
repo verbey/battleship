@@ -1,6 +1,6 @@
 :root {
 	--standard-padding: 8px;
-	--tile-size: 8vmin;
+	--tile-size: 6vmin;
 }
 
 html {
@@ -34,8 +34,8 @@ body {
 
 .left {
 	display: grid;
-	grid-template-columns: repeat(10, 8vmin);
-	grid-template-rows: repeat(10, 8vmin);
+	grid-template-columns: repeat(10, var(--tile-size));
+	grid-template-rows: repeat(10, var(--tile-size));
 	width: 50vw;
 	justify-content: center;
 }
@@ -77,4 +77,13 @@ div[class^="four"].E {
 
 div[class^="four"].N {
 	height: calc(4*var(--tile-size));
+}
+
+.shipSelectionContainer {
+	display: flex;
+	gap: 2px;
+}
+
+.shipSelectionContainer:has(.E) {
+	flex-direction: column;
 }
