@@ -59,7 +59,7 @@ div[class^="two"].E {
 	width: calc(2*var(--tile-size));
 }
 
-div[class^="two"].N {
+div[class^="two"].S {
 	height: calc(2*var(--tile-size));
 }
 
@@ -67,7 +67,7 @@ div[class^="three"].E {
 	width: calc(3*var(--tile-size));
 }
 
-div[class^="three"].N {
+div[class^="three"].S {
 	height: calc(3*var(--tile-size));
 }
 
@@ -75,7 +75,7 @@ div[class^="four"].E {
 	width: calc(4*var(--tile-size));
 }
 
-div[class^="four"].N {
+div[class^="four"].S {
 	height: calc(4*var(--tile-size));
 }
 

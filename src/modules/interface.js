@@ -17,7 +17,6 @@ export default class Interface {
 		playerNameInput.classList.add("playerNameInput");
 		this.right.appendChild(playerNameInput);
 		this.createPlayerGameboard();
-		this.playerGameboard = new Gameboard(10, 10);
 
 		const finishPlayerCreation = document.createElement("button");
 		finishPlayerCreation.addEventListener("click", (event) => {
@@ -28,7 +27,35 @@ export default class Interface {
 
 			this.createPlayerGameboard();
 			this.player = new Player(playerNameInput.value);
-			this.opponentGameboard = new Gameboard(10, 10);
+
+			try {
+
+				const allShips = document.querySelectorAll("div[class^='one'],div[class^='two'],div[class^='three'],div[class^='four']");
+
+				const allShipsArr = Array.from(allShips);
+
+				allShipsArr.forEach(ship => {
+					let shipSizeNum;
+					const shipSize = ship.classList.value.split(" ")[0].split("-")[0];
+					if (shipSize === "one") shipSizeNum = 1;
+					else if (shipSize === "two") shipSizeNum = 2;
+					else if (shipSize === "three") shipSizeNum = 3;
+					else shipSizeNum = 4;
+
+					const shipDirection = ship.classList.value.split(" ")[0];
+
+					const parentTileIndex = Array.from(ship.parentNode.parentNode).indexOf(ship.parentNode);
+
+					this.player.gameboard.addShip(shipSize, shipDirection, [Math.floor(parentTileIndex / 8), parentTileIndex % 8]);
+				});
+
+			} catch (err) {
+				console.log(err);
+				this.createPlayerGameboard();
+				return;
+			}
+
+			event.target.remove();
 
 			const startGame = document.createElement("button");
 			startGame.addEventListener("click", () => {
@@ -36,8 +63,6 @@ export default class Interface {
 			});
 			startGame.textContent = "Start Game";
 			this.right.appendChild(startGame);
-
-			event.target.remove();
 		});
 
 		finishPlayerCreation.textContent = "Done";
@@ -129,7 +154,7 @@ export default class Interface {
 			const ships = document.querySelectorAll(".shipSelectionContainer div");
 			ships.forEach(ship => {
 				ship.classList.toggle("E");
-				ship.classList.toggle("N");
+				ship.classList.toggle("S");
 			});
 		});
 		this.right.appendChild(rotateButton);
