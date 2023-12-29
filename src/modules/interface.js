@@ -25,16 +25,14 @@ export default class Interface {
 
 			if (allShipsArr.some(ship => ship.parentNode.classList.value === "shipSelectionContainer")) return;
 
-			this.createPlayerGameboard();
 			this.player = new Player(playerNameInput.value);
 
 			try {
 
 				const allShips = document.querySelectorAll("div[class^='one'],div[class^='two'],div[class^='three'],div[class^='four']");
 
-				const allShipsArr = Array.from(allShips);
+				allShips.forEach(ship => {
 
-				allShipsArr.forEach(ship => {
 					let shipSizeNum;
 					const shipSize = ship.classList.value.split(" ")[0].split("-")[0];
 					if (shipSize === "one") shipSizeNum = 1;
@@ -42,11 +40,11 @@ export default class Interface {
 					else if (shipSize === "three") shipSizeNum = 3;
 					else shipSizeNum = 4;
 
-					const shipDirection = ship.classList.value.split(" ")[0];
+					const shipDirection = ship.classList.value.split(" ")[1];
 
-					const parentTileIndex = Array.from(ship.parentNode.parentNode).indexOf(ship.parentNode);
+					const parentTileIndex = Array.from(ship.parentElement.parentElement.childNodes).indexOf(ship.parentElement);
 
-					this.player.gameboard.addShip(shipSize, shipDirection, [Math.floor(parentTileIndex / 8), parentTileIndex % 8]);
+					this.player.gameboard.addShip(shipSizeNum, shipDirection, [Math.floor(parentTileIndex / 10), parentTileIndex % 10]);
 				});
 
 			} catch (err) {
@@ -54,6 +52,9 @@ export default class Interface {
 				this.createPlayerGameboard();
 				return;
 			}
+
+
+			this.createPlayerGameboard();
 
 			event.target.remove();
 
