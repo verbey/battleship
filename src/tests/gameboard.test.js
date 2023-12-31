@@ -9,7 +9,6 @@ test("Gameboard creation. Ship creation.", () => {
 test("Gameboard creation. Ships overlap.", () => {
 	const gameboard = new Gameboard(10, 10);
 	gameboard.addShip(3, "N", [4, 1]);
-	console.log(gameboard.ships);
 	expect(() => gameboard.addShip(3, "N", [3, 1])).toThrowError("Ships overlap.");
 });
 
@@ -20,7 +19,7 @@ test("Gameboard creation. Invalid position coordinates.", () => {
 
 test("Gameboard creation. Eastern direction overflow.", () => {
 	const gameboard = new Gameboard(10, 10);
-	expect(() => gameboard.addShip(3, "E", [9, 3])).toThrowError("Can't create a ship facing east here.");
+	expect(() => gameboard.addShip(3, "E", [9, 9])).toThrowError("Can't create a ship facing east here.");
 });
 
 test("Gameboard creation. Northern direction overflow.", () => {
@@ -31,13 +30,13 @@ test("Gameboard creation. Northern direction overflow.", () => {
 
 test("Gameboard creation. Western direction overflow.", () => {
 	const gameboard = new Gameboard(10, 10);
-	expect(() => gameboard.addShip(4, "W", [0, 4])).toThrowError("Can't create a ship facing west here.");
+	expect(() => gameboard.addShip(4, "W", [0, 2])).toThrowError("Can't create a ship facing west here.");
 
 });
 
 test("Gameboard creation. Southern direction overflow.", () => {
 	const gameboard = new Gameboard(10, 10);
-	expect(() => gameboard.addShip(2, "S", [5, 0])).toThrowError("Can't create a ship facing south here.");
+	expect(() => gameboard.addShip(2, "S", [9, 0])).toThrowError("Can't create a ship facing south here.");
 
 });
 
