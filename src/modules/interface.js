@@ -176,6 +176,20 @@ export default class Interface {
 		while (this.left.firstChild) {
 			this.left.removeChild(this.left.firstChild);
 		}
+
+		const playerNameElement = document.createElement("div");
+		playerNameElement.classList.add("name");
+		playerNameElement.textContent = this.player.name;
+		this.left.appendChild(playerNameElement);
+
+		const opponentNameElement = document.createElement("div");
+		opponentNameElement.classList.add("name");
+		opponentNameElement.textContent = this.opponent.name;
+		this.right.appendChild(opponentNameElement);
+	}
+
+	displayGameboards() {
+
 	}
 
 }
