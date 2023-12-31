@@ -170,7 +170,12 @@ export default class Interface {
 	}
 
 	startGame() {
-		console.log("game started!");
+		while (this.right.firstChild) {
+			this.right.removeChild(this.right.firstChild);
+		}
+		while (this.left.firstChild) {
+			this.left.removeChild(this.left.firstChild);
+		}
 	}
 
 }
