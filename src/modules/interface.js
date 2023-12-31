@@ -1,5 +1,3 @@
-import Gameboard from "./gameboard";
-
 import Player from "./player";
 
 export default class Interface {
