@@ -40,7 +40,7 @@ body {
 	justify-content: center;
 }
 
-.left>div {
+.tile {
 	width: var(--tile-size);
 	height: var(--tile-size);
 	border: 1px solid black;
