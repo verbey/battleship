@@ -20,39 +20,10 @@ export default class Interface {
 
 		const finishPlayerCreation = document.createElement("button");
 		finishPlayerCreation.addEventListener("click", (event) => {
-			const allShips = document.querySelectorAll("div[class^='one'],div[class^='two'],div[class^='three'],div[class^='four']");
-			const allShipsArr = Array.from(allShips);
-
-			if (allShipsArr.some(ship => ship.parentNode.classList.value === "shipSelectionContainer")) return;
-
 			this.player = new Player(playerNameInput.value);
 
-			try {
-
-				const allShips = document.querySelectorAll("div[class^='one'],div[class^='two'],div[class^='three'],div[class^='four']");
-
-				allShips.forEach(ship => {
-
-					let shipSizeNum;
-					const shipSize = ship.classList.value.split(" ")[0].split("-")[0];
-					if (shipSize === "one") shipSizeNum = 1;
-					else if (shipSize === "two") shipSizeNum = 2;
-					else if (shipSize === "three") shipSizeNum = 3;
-					else shipSizeNum = 4;
-
-					const shipDirection = ship.classList.value.split(" ")[1];
-
-					const parentTileIndex = Array.from(ship.parentElement.parentElement.childNodes).indexOf(ship.parentElement);
-
-					this.player.gameboard.addShip(shipSizeNum, shipDirection, [Math.floor(parentTileIndex / 10), parentTileIndex % 10]);
-				});
-
-			} catch (err) {
-				console.log(err);
-				this.createPlayerGameboard();
-				return;
-			}
-
+			const shipAppend = this.appendShipsToGameboard(this.player.gameboard);
+			if (shipAppend === 1) return;
 
 			this.createPlayerGameboard();
 
@@ -60,6 +31,11 @@ export default class Interface {
 
 			const startGame = document.createElement("button");
 			startGame.addEventListener("click", () => {
+				this.opponent = new Player("bot");
+
+				const shipAppend = this.appendShipsToGameboard(this.opponent.gameboard);
+				if (shipAppend === 1) return;
+
 				this.startGame();
 			});
 			startGame.textContent = "Start Game";
@@ -68,6 +44,39 @@ export default class Interface {
 
 		finishPlayerCreation.textContent = "Done";
 		this.right.appendChild(finishPlayerCreation);
+	}
+
+
+	appendShipsToGameboard(gameboard) {
+		const allShips = document.querySelectorAll("div[class^='one'],div[class^='two'],div[class^='three'],div[class^='four']");
+		const allShipsArr = Array.from(allShips);
+		if (allShipsArr.some(ship => ship.parentNode.classList.value === "shipSelectionContainer")) return 1;
+
+		try {
+
+			const allShips = document.querySelectorAll("div[class^='one'],div[class^='two'],div[class^='three'],div[class^='four']");
+
+			allShips.forEach(ship => {
+
+				let shipSizeNum;
+				const shipSize = ship.classList.value.split(" ")[0].split("-")[0];
+				if (shipSize === "one") shipSizeNum = 1;
+				else if (shipSize === "two") shipSizeNum = 2;
+				else if (shipSize === "three") shipSizeNum = 3;
+				else shipSizeNum = 4;
+
+				const shipDirection = ship.classList.value.split(" ")[1];
+
+				const parentTileIndex = Array.from(ship.parentElement.parentElement.childNodes).indexOf(ship.parentElement);
+
+				gameboard.addShip(shipSizeNum, shipDirection, [Math.floor(parentTileIndex / 10), parentTileIndex % 10]);
+			});
+
+		} catch (err) {
+			console.log(err);
+			this.createPlayerGameboard();
+			return 1;
+		}
 	}
 
 	createPlayerGameboard() {
@@ -160,6 +169,10 @@ export default class Interface {
 		});
 		this.right.appendChild(rotateButton);
 
+	}
+
+	startGame() {
+		console.log("game started!");
 	}
 
 }
