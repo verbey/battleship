@@ -29,7 +29,7 @@ export default class Interface {
 
 			const startGame = document.createElement("button");
 			startGame.addEventListener("click", () => {
-				this.opponent = new Player("bot");
+				this.opponent = new Player(playerNameInput.value, "bot");
 
 				const shipAppend = this.appendShipsToGameboard(this.opponent.gameboard);
 				if (shipAppend === 1) return;
@@ -188,8 +188,41 @@ export default class Interface {
 		this.right.appendChild(opponentNameElement);
 	}
 
-	displayGameboards() {
+	displayGameboards(turn) {
+		const gameboardElements = document.querySelectorAll(".gameboard");
+		gameboardElements.forEach(gameboardElement => {
+			gameboardElement.remove();
+		});
 
+		const newPlayerGameboardElement = document.createElement("div");
+		newPlayerGameboardElement.classList.add("gameboard");
+		this.left.appendChild(newPlayerGameboardElement);
+
+
+		const newOpponentGameboardElement = document.createElement("div");
+		newOpponentGameboardElement.classList.add("gameboard");
+		this.right.appendChild(newOpponentGameboardElement);
+
+		for (let i = 0; i < 100; i++) {
+			const tile = document.createElement("div");
+			tile.classList.add("tile");
+			tile.addEventListener("click", () => {
+				if (turn === "player") {
+					this.opponent.gameboard.receiveAttack([Math.floor(i / 10), i % 10]);
+					this.displayGameboards("opponent");
+					if (this.opponent.gameboard.allSunk()) {
+						this.displayWinner("player");
+					}
+				}
+				else if (turn === "opponent") {
+					this.player.gameboard.receiveAttack([Math.floor(i / 10), i % 10]);
+					this.displayGameboards("player");
+					if (this.player.gameboard.allSunk()) {
+						this.displayWinner("opponent");
+					}
+				}
+			});
+		}
 	}
 
 }
