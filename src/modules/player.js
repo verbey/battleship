@@ -2,10 +2,11 @@ import Gameboard from "./gameboard";
 
 export default class PLayer {
 	constructor(name, type) {
-		if (!name || name === "") name = type === "bot" ? "Computer" : "Bob";
-		else this.name = name;
-		if (!type || type === "") type = "human";
+		if (type === undefined || type === "") this.type = "human";
 		else this.type = type;
+
+		if (name === undefined || name === "") this.name = this.type === "bot" ? "Computer" : "Bob";
+		else this.name = name;
 		this.gameboard = new Gameboard(10, 10);
 	}
 
