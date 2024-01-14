@@ -88,11 +88,15 @@ export default class Interface {
 
 		document.querySelector(".rotateButton")?.remove();
 
+		const gameboardElement = document.createElement("div");
+		gameboardElement.classList.add("gameboard");
+		this.left.appendChild(gameboardElement);
+
 		for (let i = 0; i < 10; i++) {
 			for (let j = 0; j < 10; j++) {
 				const tile = document.createElement("div");
 				tile.classList.add("tile");
-				this.left.appendChild(tile);
+				gameboardElement.appendChild(tile);
 
 				tile.addEventListener("dragover", (e) => {
 					e.preventDefault();
@@ -186,6 +190,8 @@ export default class Interface {
 		opponentNameElement.classList.add("name");
 		opponentNameElement.textContent = this.opponent.name;
 		this.right.appendChild(opponentNameElement);
+
+		this.displayGameboards("player");
 	}
 
 	displayGameboards(turn) {
@@ -203,26 +209,30 @@ export default class Interface {
 		newOpponentGameboardElement.classList.add("gameboard");
 		this.right.appendChild(newOpponentGameboardElement);
 
-		for (let i = 0; i < 100; i++) {
-			const tile = document.createElement("div");
-			tile.classList.add("tile");
-			tile.addEventListener("click", () => {
-				if (turn === "player") {
-					this.opponent.gameboard.receiveAttack([Math.floor(i / 10), i % 10]);
-					this.displayGameboards("opponent");
-					if (this.opponent.gameboard.allSunk()) {
-						this.displayWinner("player");
-					}
-				}
-				else if (turn === "opponent") {
-					this.player.gameboard.receiveAttack([Math.floor(i / 10), i % 10]);
-					this.displayGameboards("player");
-					if (this.player.gameboard.allSunk()) {
-						this.displayWinner("opponent");
-					}
-				}
-			});
+		for (let i = 0; i < 10; i++) {
+			for (let j = 0; j < 10; j++) {
+				const tile = document.createElement("div");
+				tile.classList.add("tile");
+
+				const ifTargeted = this.player.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
+				if (ifTargeted && this.player.gameboard.isShipTile()) tile.classList.add("hit");
+				else if (ifTargeted) tile.classList.add("miss");
+
+				newPlayerGameboardElement.appendChild(tile);
+			}
+		}
+
+		for (let i = 0; i < 10; i++) {
+			for (let j = 0; j < 10; j++) {
+				const tile = document.createElement("div");
+				tile.classList.add("tile");
+
+				const ifTargeted = this.opponent.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
+				if (ifTargeted && this.opponent.gameboard.isShipTile()) tile.classList.add("hit");
+				else if (ifTargeted) tile.classList.add("miss");
+
+				newOpponentGameboardElement.appendChild(tile);
+			}
 		}
 	}
-
 }
