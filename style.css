@@ -32,12 +32,18 @@ body {
 	padding: var(--standard-padding);
 }
 
-.left {
+.left,
+.right {
+	width: 50vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.gameboard {
 	display: grid;
 	grid-template-columns: repeat(10, var(--tile-size));
 	grid-template-rows: repeat(10, var(--tile-size));
-	width: 50vw;
-	justify-content: center;
 }
 
 .tile {
