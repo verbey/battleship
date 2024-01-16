@@ -213,10 +213,21 @@ export default class Interface {
 			for (let j = 0; j < 10; j++) {
 				const tile = document.createElement("div");
 				tile.classList.add("tile");
+				tile.dataset.i = i;
+				tile.dataset.j = j;
 
 				const ifTargeted = this.player.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
-				if (ifTargeted && this.player.gameboard.isShipTile()) tile.classList.add("hit");
+				if (ifTargeted && this.player.gameboard.isShipTile([i, j])) tile.classList.add("hit");
 				else if (ifTargeted) tile.classList.add("miss");
+
+				if (turn === "opponent") {
+					tile.addEventListener("click", (event) => {
+						const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
+						this.player.gameboard.receiveAttack(coordinates);
+						this.displayGameboards(this.player.gameboard.isShipTile(coordinates) ? "opponent" : "player");
+					});
+				}
+
 
 				newPlayerGameboardElement.appendChild(tile);
 			}
@@ -226,10 +237,20 @@ export default class Interface {
 			for (let j = 0; j < 10; j++) {
 				const tile = document.createElement("div");
 				tile.classList.add("tile");
+				tile.dataset.i = i;
+				tile.dataset.j = j;
 
 				const ifTargeted = this.opponent.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
-				if (ifTargeted && this.opponent.gameboard.isShipTile()) tile.classList.add("hit");
+				if (ifTargeted && this.opponent.gameboard.isShipTile([i, j])) tile.classList.add("hit");
 				else if (ifTargeted) tile.classList.add("miss");
+
+				if (turn === "player") {
+					tile.addEventListener("click", (event) => {
+						const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
+						this.opponent.gameboard.receiveAttack(coordinates);
+						this.displayGameboards(this.opponent.gameboard.isShipTile(coordinates) ? "player" : "opponent");
+					});
+				}
 
 				newOpponentGameboardElement.appendChild(tile);
 			}
