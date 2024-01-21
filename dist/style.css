@@ -93,3 +93,11 @@ div[class^="four"].S {
 .shipSelectionContainer:has(.E) {
 	flex-direction: column;
 }
+
+.miss {
+	background-color: gray;
+}
+
+.hit {
+	background-color: red;
+}
