@@ -30,9 +30,10 @@ export default class Gameboard {
 			const index = this.ships[i].tiles.findIndex((tileCoordinates) => {
 				return tileCoordinates[0] === coordinates[0] && tileCoordinates[1] === coordinates[1];
 			});
-			if (index === -1) return false;
+			if (index === -1) continue;
 			else return true;
 		}
+		return false;
 	}
 
 	receiveAttack(coordinates) {

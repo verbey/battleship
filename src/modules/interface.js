@@ -228,7 +228,6 @@ export default class Interface {
 					});
 				}
 
-
 				newPlayerGameboardElement.appendChild(tile);
 			}
 		}
