@@ -224,7 +224,8 @@ export default class Interface {
 					tile.addEventListener("click", (event) => {
 						const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
 						this.player.gameboard.receiveAttack(coordinates);
-						this.displayGameboards(this.player.gameboard.isShipTile(coordinates) ? "opponent" : "player");
+						if (this.player.gameboard.areAllSunk() === true) this.announceWinner(this.opponent, this.player);
+						else this.displayGameboards(this.player.gameboard.isShipTile(coordinates) ? "opponent" : "player");
 					});
 				}
 
@@ -247,12 +248,58 @@ export default class Interface {
 					tile.addEventListener("click", (event) => {
 						const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
 						this.opponent.gameboard.receiveAttack(coordinates);
-						this.displayGameboards(this.opponent.gameboard.isShipTile(coordinates) ? "player" : "opponent");
+						if (this.opponent.gameboard.areAllSunk() === true) this.announceWinner(this.player, this.opponent);
+						else this.displayGameboards(this.opponent.gameboard.isShipTile(coordinates) ? "player" : "opponent");
 					});
 				}
 
 				newOpponentGameboardElement.appendChild(tile);
 			}
 		}
+	}
+
+	announceWinner(winnerPlayerObject, loserPlayerObject) {
+		while (this.right.firstChild) {
+			this.right.removeChild(this.right.firstChild);
+		}
+		while (this.left.firstChild) {
+			this.left.removeChild(this.left.firstChild);
+		}
+
+		const announceText = document.createElement("div");
+		announceText.classList.add("announceText");
+		announceText.textContent = "The winner is...";
+		this.left.appendChild(announceText);
+
+		const winnerName = document.createElement("div");
+		winnerName.classList.add("winnerName");
+		winnerName.textContent = winnerPlayerObject.name;
+		this.left.appendChild(winnerName);
+
+		const stats = document.createElement("div");
+		stats.classList.add("stats");
+
+		const missedHitsText = document.createElement("div");
+		missedHitsText.textContent = "Missed hits";
+		stats.appendChild(missedHitsText);
+
+		const missedHitsNum = document.createElement("div");
+		missedHitsNum.textContent = `${loserPlayerObject.gameboard.targetedTiles.length - 20}/${loserPlayerObject.gameboard.targetedTiles.length}`;
+		stats.appendChild(missedHitsNum);
+
+		const ownShipTilesLeftText = document.createElement("div");
+		ownShipTilesLeftText.textContent = "Own ship tiles left";
+		stats.appendChild(ownShipTilesLeftText);
+
+		const ownShipTilesLeftNum = document.createElement("div");
+		let ownShipTilesLeftCount = 20;
+		for (let i = 0; i < winnerPlayerObject.gameboard.ships.length; i++) ownShipTilesLeftCount -= winnerPlayerObject.gameboard.ships[i].hitTiles.length;
+		ownShipTilesLeftNum.textContent = `${ownShipTilesLeftCount}`;
+		stats.appendChild(ownShipTilesLeftNum);
+		this.right.appendChild(stats);
+
+		const startNewGameButton = document.createElement("button");
+		startNewGameButton.textContent = "New game";
+		this.right.appendChild(startNewGameButton);
 	}
 }
