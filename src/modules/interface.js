@@ -10,6 +10,8 @@ export default class Interface {
 	}
 
 	createPlayers() {
+		this.clearRightAndLeft();
+
 		const playerNameInput = document.createElement("input");
 		playerNameInput.type = "text";
 		playerNameInput.placeholder = "Enter your name";
@@ -175,12 +177,7 @@ export default class Interface {
 	}
 
 	startGame() {
-		while (this.right.firstChild) {
-			this.right.removeChild(this.right.firstChild);
-		}
-		while (this.left.firstChild) {
-			this.left.removeChild(this.left.firstChild);
-		}
+		this.clearRightAndLeft();
 
 		const playerNameElement = document.createElement("div");
 		playerNameElement.classList.add("name");
@@ -260,12 +257,7 @@ export default class Interface {
 	}
 
 	announceWinner(winnerPlayerObject, loserPlayerObject) {
-		while (this.right.firstChild) {
-			this.right.removeChild(this.right.firstChild);
-		}
-		while (this.left.firstChild) {
-			this.left.removeChild(this.left.firstChild);
-		}
+		this.clearRightAndLeft();
 
 		const announceText = document.createElement("div");
 		announceText.classList.add("announceText");
@@ -305,6 +297,9 @@ export default class Interface {
 
 		const startNewGameButton = document.createElement("button");
 		startNewGameButton.textContent = "New game";
+		startNewGameButton.addEventListener("click", () => {
+			this.createPlayers();
+		});
 		this.right.appendChild(startNewGameButton);
 
 		const foxGirlImage = new Image();
@@ -316,5 +311,14 @@ export default class Interface {
 		textBubble.textContent = "Good job, commander!";
 		textBubble.classList.add("textBubble");
 		stats.appendChild(textBubble);
+	}
+
+	clearRightAndLeft() {
+		while (this.right.firstChild) {
+			this.right.removeChild(this.right.firstChild);
+		}
+		while (this.left.firstChild) {
+			this.left.removeChild(this.left.firstChild);
+		}
 	}
 }
