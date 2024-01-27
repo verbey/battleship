@@ -1,4 +1,5 @@
 import Player from "./player";
+import FoxgirlImage from "../imgs/fox_girl.webp";
 
 export default class Interface {
 
@@ -272,7 +273,7 @@ export default class Interface {
 		this.left.appendChild(announceText);
 
 		const winnerName = document.createElement("div");
-		winnerName.classList.add("winnerName");
+		winnerName.classList.add("statText");
 		winnerName.textContent = winnerPlayerObject.name;
 		this.left.appendChild(winnerName);
 
@@ -281,25 +282,39 @@ export default class Interface {
 
 		const missedHitsText = document.createElement("div");
 		missedHitsText.textContent = "Missed hits";
+		missedHitsText.classList.add("statText");
 		stats.appendChild(missedHitsText);
 
 		const missedHitsNum = document.createElement("div");
 		missedHitsNum.textContent = `${loserPlayerObject.gameboard.targetedTiles.length - 20}/${loserPlayerObject.gameboard.targetedTiles.length}`;
+		missedHitsNum.classList.add("statNum");
 		stats.appendChild(missedHitsNum);
 
 		const ownShipTilesLeftText = document.createElement("div");
 		ownShipTilesLeftText.textContent = "Own ship tiles left";
+		ownShipTilesLeftText.classList.add("statText");
 		stats.appendChild(ownShipTilesLeftText);
 
 		const ownShipTilesLeftNum = document.createElement("div");
 		let ownShipTilesLeftCount = 20;
 		for (let i = 0; i < winnerPlayerObject.gameboard.ships.length; i++) ownShipTilesLeftCount -= winnerPlayerObject.gameboard.ships[i].hitTiles.length;
 		ownShipTilesLeftNum.textContent = `${ownShipTilesLeftCount}`;
+		ownShipTilesLeftNum.classList.add("statNum");
 		stats.appendChild(ownShipTilesLeftNum);
 		this.right.appendChild(stats);
 
 		const startNewGameButton = document.createElement("button");
 		startNewGameButton.textContent = "New game";
 		this.right.appendChild(startNewGameButton);
+
+		const foxGirlImage = new Image();
+		foxGirlImage.src = FoxgirlImage;
+		foxGirlImage.alt = "Happy fox girl looking at viewer.";
+		stats.appendChild(foxGirlImage);
+
+		const textBubble = document.createElement("div");
+		textBubble.textContent = "Good job, commander!";
+		textBubble.classList.add("textBubble");
+		stats.appendChild(textBubble);
 	}
 }
