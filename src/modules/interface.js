@@ -17,11 +17,22 @@ export default class Interface {
 		playerNameInput.placeholder = "Enter your name";
 		playerNameInput.classList.add("playerNameInput");
 		this.right.appendChild(playerNameInput);
+
+		const playerTypeCheckbox = document.createElement("input");
+		playerTypeCheckbox.type = "checkbox";
+		playerTypeCheckbox.id = "playerTypeCheckbox";
+		this.right.appendChild(playerTypeCheckbox);
+
+		const playerTypeLabel = document.createElement("label");
+		playerTypeLabel.textContent = "Computer";
+		playerTypeLabel.htmlFor = "playerTypeCheckbox";
+		this.right.appendChild(playerTypeLabel);
+
 		this.createPlayerGameboard();
 
 		const finishPlayerCreation = document.createElement("button");
 		finishPlayerCreation.addEventListener("click", (event) => {
-			this.player = new Player(playerNameInput.value);
+			this.player = new Player(playerNameInput.value, playerTypeCheckbox.checked);
 
 			const shipAppend = this.appendShipsToGameboard(this.player.gameboard);
 			if (shipAppend === 1) return;
@@ -32,7 +43,7 @@ export default class Interface {
 
 			const startGame = document.createElement("button");
 			startGame.addEventListener("click", () => {
-				this.opponent = new Player(playerNameInput.value, "bot");
+				this.opponent = new Player(playerNameInput.value, playerTypeCheckbox.checked);
 
 				const shipAppend = this.appendShipsToGameboard(this.opponent.gameboard);
 				if (shipAppend === 1) return;
@@ -118,7 +129,7 @@ export default class Interface {
 
 		const shipFourSize = document.createElement("div");
 		shipFourSize.classList.add("four-0");
-		shipFourSize.classList.add("E"); // Add E class
+		shipFourSize.classList.add("E");
 		shipFourSize.draggable = true;
 		shipSelectionContainer.appendChild(shipFourSize);
 
