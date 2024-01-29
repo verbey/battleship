@@ -203,87 +203,83 @@ export default class Interface {
 		this.displayGameboards("player");
 	}
 
-	displayGameboards(turn) {
-		let currentTurnPlayer;
-		let nextTurnPlayer;
-		if (turn === "player") {
-			currentTurnPlayer = this.player;
-			nextTurnPlayer = this.opponent;
-		}
-		else if (turn === "opponent") {
-			currentTurnPlayer = this.opponent;
-			nextTurnPlayer = this.player;
-		}
+	async displayGameboards(turn) {
+		const gameboardElements = document.querySelectorAll(".gameboard");
+		gameboardElements.forEach(gameboardElement => {
+			gameboardElement.remove();
+		});
 
-		if (currentTurnPlayer.type === "bot") {
-			const botAttackCoordinates = currentTurnPlayer.generateHitTarget(nextTurnPlayer.gameboard);
-			nextTurnPlayer.gameboard.receiveAttack(botAttackCoordinates);
-			if (nextTurnPlayer.gameboard.areAllSunk()) this.announceWinner(currentTurnPlayer, nextTurnPlayer);
-			else if (turn === "opponent") this.displayGameboards(nextTurnPlayer.gameboard.isShipTile(botAttackCoordinates) ? "opponent" : "player");
-			else if (turn === "player") this.displayGameboards(nextTurnPlayer.gameboard.isShipTile(botAttackCoordinates) ? "player" : "opponent");
-		}
-		else {
-			const gameboardElements = document.querySelectorAll(".gameboard");
-			gameboardElements.forEach(gameboardElement => {
-				gameboardElement.remove();
-			});
-
-			const newPlayerGameboardElement = document.createElement("div");
-			newPlayerGameboardElement.classList.add("gameboard");
-			this.left.appendChild(newPlayerGameboardElement);
+		const newPlayerGameboardElement = document.createElement("div");
+		newPlayerGameboardElement.classList.add("gameboard");
+		this.left.appendChild(newPlayerGameboardElement);
 
 
-			const newOpponentGameboardElement = document.createElement("div");
-			newOpponentGameboardElement.classList.add("gameboard");
-			this.right.appendChild(newOpponentGameboardElement);
+		const newOpponentGameboardElement = document.createElement("div");
+		newOpponentGameboardElement.classList.add("gameboard");
+		this.right.appendChild(newOpponentGameboardElement);
 
-			for (let i = 0; i < 10; i++) {
-				for (let j = 0; j < 10; j++) {
-					const tile = document.createElement("div");
-					tile.classList.add("tile");
-					tile.dataset.i = i;
-					tile.dataset.j = j;
+		for (let i = 0; i < 10; i++) {
+			for (let j = 0; j < 10; j++) {
+				const tile = document.createElement("div");
+				tile.classList.add("tile");
+				tile.dataset.i = i;
+				tile.dataset.j = j;
 
-					const ifTargeted = this.player.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
-					if (ifTargeted && this.player.gameboard.isShipTile([i, j])) tile.classList.add("hit");
-					else if (ifTargeted) tile.classList.add("miss");
+				const ifTargeted = this.player.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
+				if (ifTargeted && this.player.gameboard.isShipTile([i, j])) tile.classList.add("hit");
+				else if (ifTargeted) tile.classList.add("miss");
 
-					if (turn === "opponent") {
-						tile.addEventListener("click", (event) => {
-							const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
-							this.player.gameboard.receiveAttack(coordinates);
-							if (this.player.gameboard.areAllSunk() === true) this.announceWinner(this.opponent, this.player);
-							else this.displayGameboards(this.player.gameboard.isShipTile(coordinates) ? "opponent" : "player");
-						});
-					}
-
-					newPlayerGameboardElement.appendChild(tile);
+				if (turn === "opponent" && this.opponent.type === "human") {
+					tile.addEventListener("click", (event) => {
+						const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
+						this.player.gameboard.receiveAttack(coordinates);
+						if (this.player.gameboard.areAllSunk() === true) this.announceWinner(this.opponent, this.player);
+						else this.displayGameboards(this.player.gameboard.isShipTile(coordinates) ? "opponent" : "player");
+					});
 				}
+
+				newPlayerGameboardElement.appendChild(tile);
 			}
+		}
 
-			for (let i = 0; i < 10; i++) {
-				for (let j = 0; j < 10; j++) {
-					const tile = document.createElement("div");
-					tile.classList.add("tile");
-					tile.dataset.i = i;
-					tile.dataset.j = j;
+		for (let i = 0; i < 10; i++) {
+			for (let j = 0; j < 10; j++) {
+				const tile = document.createElement("div");
+				tile.classList.add("tile");
+				tile.dataset.i = i;
+				tile.dataset.j = j;
 
-					const ifTargeted = this.opponent.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
-					if (ifTargeted && this.opponent.gameboard.isShipTile([i, j])) tile.classList.add("hit");
-					else if (ifTargeted) tile.classList.add("miss");
+				const ifTargeted = this.opponent.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
+				if (ifTargeted && this.opponent.gameboard.isShipTile([i, j])) tile.classList.add("hit");
+				else if (ifTargeted) tile.classList.add("miss");
 
-					if (turn === "player") {
-						tile.addEventListener("click", (event) => {
-							const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
-							this.opponent.gameboard.receiveAttack(coordinates);
-							if (this.opponent.gameboard.areAllSunk() === true) this.announceWinner(this.player, this.opponent);
-							else this.displayGameboards(this.opponent.gameboard.isShipTile(coordinates) ? "player" : "opponent");
-						});
-					}
-
-					newOpponentGameboardElement.appendChild(tile);
+				if (turn === "player" && this.player.type === "human") {
+					tile.addEventListener("click", (event) => {
+						const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
+						this.opponent.gameboard.receiveAttack(coordinates);
+						if (this.opponent.gameboard.areAllSunk() === true) this.announceWinner(this.player, this.opponent);
+						else this.displayGameboards(this.opponent.gameboard.isShipTile(coordinates) ? "player" : "opponent");
+					});
 				}
+
+				newOpponentGameboardElement.appendChild(tile);
 			}
+		}
+
+		if (turn === "opponent" && this.opponent.type === "bot") {
+			const botAttackCoordinates = this.opponent.generateHitTarget(this.player.gameboard);
+			await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * 5) * 1000));
+			this.player.gameboard.receiveAttack(botAttackCoordinates);
+			if (this.player.gameboard.areAllSunk()) this.announceWinner(this.opponent, this.player);
+			else this.displayGameboards(this.player.gameboard.isShipTile(botAttackCoordinates) ? "opponent" : "player");
+		}
+
+		else if (turn === "player" && this.player.type === "bot") {
+			const botAttackCoordinates = this.player.generateHitTarget(this.opponent.gameboard);
+			await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * 5) * 1000));
+			this.opponent.gameboard.receiveAttack(botAttackCoordinates);
+			if (this.opponent.gameboard.areAllSunk()) this.announceWinner(this.player, this.opponent);
+			else this.displayGameboards(this.opponent.gameboard.isShipTile(botAttackCoordinates) ? "player" : "opponent");
 		}
 	}
 
