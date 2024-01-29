@@ -32,7 +32,7 @@ export default class Interface {
 
 		const finishPlayerCreation = document.createElement("button");
 		finishPlayerCreation.addEventListener("click", (event) => {
-			this.player = new Player(playerNameInput.value, playerTypeCheckbox.checked);
+			this.player = new Player(playerNameInput.value, playerTypeCheckbox.checked ? "bot" : "human");
 
 			const shipAppend = this.appendShipsToGameboard(this.player.gameboard);
 			if (shipAppend === 1) return;
@@ -43,7 +43,7 @@ export default class Interface {
 
 			const startGame = document.createElement("button");
 			startGame.addEventListener("click", () => {
-				this.opponent = new Player(playerNameInput.value, playerTypeCheckbox.checked);
+				this.opponent = new Player(playerNameInput.value, playerTypeCheckbox.checked ? "bot" : "human");
 
 				const shipAppend = this.appendShipsToGameboard(this.opponent.gameboard);
 				if (shipAppend === 1) return;
@@ -204,65 +204,85 @@ export default class Interface {
 	}
 
 	displayGameboards(turn) {
-		const gameboardElements = document.querySelectorAll(".gameboard");
-		gameboardElements.forEach(gameboardElement => {
-			gameboardElement.remove();
-		});
-
-		const newPlayerGameboardElement = document.createElement("div");
-		newPlayerGameboardElement.classList.add("gameboard");
-		this.left.appendChild(newPlayerGameboardElement);
-
-
-		const newOpponentGameboardElement = document.createElement("div");
-		newOpponentGameboardElement.classList.add("gameboard");
-		this.right.appendChild(newOpponentGameboardElement);
-
-		for (let i = 0; i < 10; i++) {
-			for (let j = 0; j < 10; j++) {
-				const tile = document.createElement("div");
-				tile.classList.add("tile");
-				tile.dataset.i = i;
-				tile.dataset.j = j;
-
-				const ifTargeted = this.player.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
-				if (ifTargeted && this.player.gameboard.isShipTile([i, j])) tile.classList.add("hit");
-				else if (ifTargeted) tile.classList.add("miss");
-
-				if (turn === "opponent") {
-					tile.addEventListener("click", (event) => {
-						const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
-						this.player.gameboard.receiveAttack(coordinates);
-						if (this.player.gameboard.areAllSunk() === true) this.announceWinner(this.opponent, this.player);
-						else this.displayGameboards(this.player.gameboard.isShipTile(coordinates) ? "opponent" : "player");
-					});
-				}
-
-				newPlayerGameboardElement.appendChild(tile);
-			}
+		let currentTurnPlayer;
+		let nextTurnPlayer;
+		if (turn === "player") {
+			currentTurnPlayer = this.player;
+			nextTurnPlayer = this.opponent;
+		}
+		else if (turn === "opponent") {
+			currentTurnPlayer = this.opponent;
+			nextTurnPlayer = this.player;
 		}
 
-		for (let i = 0; i < 10; i++) {
-			for (let j = 0; j < 10; j++) {
-				const tile = document.createElement("div");
-				tile.classList.add("tile");
-				tile.dataset.i = i;
-				tile.dataset.j = j;
+		if (currentTurnPlayer.type === "bot") {
+			const botAttackCoordinates = currentTurnPlayer.generateHitTarget(nextTurnPlayer.gameboard);
+			nextTurnPlayer.gameboard.receiveAttack(botAttackCoordinates);
+			if (nextTurnPlayer.gameboard.areAllSunk()) this.announceWinner(currentTurnPlayer, nextTurnPlayer);
+			else if (turn === "opponent") this.displayGameboards(nextTurnPlayer.gameboard.isShipTile(botAttackCoordinates) ? "opponent" : "player");
+			else if (turn === "player") this.displayGameboards(nextTurnPlayer.gameboard.isShipTile(botAttackCoordinates) ? "player" : "opponent");
+		}
+		else {
+			const gameboardElements = document.querySelectorAll(".gameboard");
+			gameboardElements.forEach(gameboardElement => {
+				gameboardElement.remove();
+			});
 
-				const ifTargeted = this.opponent.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
-				if (ifTargeted && this.opponent.gameboard.isShipTile([i, j])) tile.classList.add("hit");
-				else if (ifTargeted) tile.classList.add("miss");
+			const newPlayerGameboardElement = document.createElement("div");
+			newPlayerGameboardElement.classList.add("gameboard");
+			this.left.appendChild(newPlayerGameboardElement);
 
-				if (turn === "player") {
-					tile.addEventListener("click", (event) => {
-						const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
-						this.opponent.gameboard.receiveAttack(coordinates);
-						if (this.opponent.gameboard.areAllSunk() === true) this.announceWinner(this.player, this.opponent);
-						else this.displayGameboards(this.opponent.gameboard.isShipTile(coordinates) ? "player" : "opponent");
-					});
+
+			const newOpponentGameboardElement = document.createElement("div");
+			newOpponentGameboardElement.classList.add("gameboard");
+			this.right.appendChild(newOpponentGameboardElement);
+
+			for (let i = 0; i < 10; i++) {
+				for (let j = 0; j < 10; j++) {
+					const tile = document.createElement("div");
+					tile.classList.add("tile");
+					tile.dataset.i = i;
+					tile.dataset.j = j;
+
+					const ifTargeted = this.player.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
+					if (ifTargeted && this.player.gameboard.isShipTile([i, j])) tile.classList.add("hit");
+					else if (ifTargeted) tile.classList.add("miss");
+
+					if (turn === "opponent") {
+						tile.addEventListener("click", (event) => {
+							const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
+							this.player.gameboard.receiveAttack(coordinates);
+							if (this.player.gameboard.areAllSunk() === true) this.announceWinner(this.opponent, this.player);
+							else this.displayGameboards(this.player.gameboard.isShipTile(coordinates) ? "opponent" : "player");
+						});
+					}
+
+					newPlayerGameboardElement.appendChild(tile);
 				}
+			}
 
-				newOpponentGameboardElement.appendChild(tile);
+			for (let i = 0; i < 10; i++) {
+				for (let j = 0; j < 10; j++) {
+					const tile = document.createElement("div");
+					tile.classList.add("tile");
+					tile.dataset.i = i;
+					tile.dataset.j = j;
+
+					const ifTargeted = this.opponent.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
+					if (ifTargeted && this.opponent.gameboard.isShipTile([i, j])) tile.classList.add("hit");
+					else if (ifTargeted) tile.classList.add("miss");
+
+					if (turn === "player") {
+						tile.addEventListener("click", (event) => {
+							const coordinates = [Number(event.target.dataset.i), Number(event.target.dataset.j)];
+							this.opponent.gameboard.receiveAttack(coordinates);
+							if (this.opponent.gameboard.areAllSunk() === true) this.announceWinner(this.player, this.opponent);
+							else this.displayGameboards(this.opponent.gameboard.isShipTile(coordinates) ? "player" : "opponent");
+						});
+					}
+
+					newOpponentGameboardElement.appendChild(tile);
+				}
 			}
 		}
 	}
