@@ -287,12 +287,12 @@ export default class Interface {
 		this.clearRightAndLeft();
 
 		const announceText = document.createElement("div");
-		announceText.classList.add("announceText");
+		announceText.classList.add("statText");
 		announceText.textContent = "The winner is...";
 		this.left.appendChild(announceText);
 
 		const winnerName = document.createElement("div");
-		winnerName.classList.add("statText");
+		winnerName.classList.add("winnerNameText");
 		winnerName.textContent = winnerPlayerObject.name;
 		this.left.appendChild(winnerName);
 
