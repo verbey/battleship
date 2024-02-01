@@ -231,3 +231,55 @@ input[type="text"]:focus {
 .right:has(.shipSelectionContainer)>input[type="checkbox"] {
 	justify-self: flex-end;
 }
+
+.statText {
+	font-size: 1.5rem;
+}
+
+.statNum {
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+.winnerNameText {
+	font-size: 2rem;
+	font-weight: 700;
+}
+
+.stats {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	height: 80vh;
+	gap: var(--standard-padding);
+}
+
+.stats>img {
+	height: 50vh;
+	min-width: auto;
+	object-fit: contain;
+}
+
+.textBubble {
+	margin-top: 5vh;
+	border-radius: 24px;
+	background-color: var(--ctp-mocha-text);
+	color: var(--ctp-mocha-base);
+	line-height: 1.5rem;
+	padding: var(--standard-padding);
+	text-align: center;
+	height: 2rem;
+	z-index: 1;
+}
+
+.textBubble:before {
+	position: relative;
+	border-left: 2vh solid var(--ctp-mocha-text);
+	border-right: 2vh solid transparent;
+	border-top: 1vh solid var(--ctp-mocha-text);
+	border-bottom: 2vh solid transparent;
+	width: 0;
+	height: 0;
+	content: "";
+	z-index: 0;
+}
