@@ -179,11 +179,11 @@ div[class^="four"].S {
 }
 
 .miss {
-	background-color: gray;
+	background-color: var(--ctp-mocha-subtext0);
 }
 
 .hit {
-	background-color: red;
+	background-color: var(--ctp-mocha-red);
 }
 
 button {
