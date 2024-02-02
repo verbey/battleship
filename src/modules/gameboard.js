@@ -26,6 +26,7 @@ export default class Gameboard {
 	}
 
 	isShipTile(coordinates) {
+		if (coordinates === undefined) return false;
 		for (let i = 0; i < this.ships.length; i++) {
 			const index = this.ships[i].tiles.findIndex((tileCoordinates) => {
 				return tileCoordinates[0] === coordinates[0] && tileCoordinates[1] === coordinates[1];
