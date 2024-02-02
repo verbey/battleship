@@ -319,8 +319,10 @@ export default class Interface {
 		this.left.appendChild(announceText);
 
 		const winnerName = document.createElement("div");
-		winnerName.classList.add("winnerNameText");
 		winnerName.textContent = winnerPlayerObject.name;
+		winnerName.classList.add("winnerNameText");
+		winnerName.classList.add("animate__animated");
+		winnerName.classList.add("animate__backInUp");
 		this.left.appendChild(winnerName);
 
 		const stats = document.createElement("div");
@@ -334,6 +336,8 @@ export default class Interface {
 		const missedHitsNum = document.createElement("div");
 		missedHitsNum.textContent = `${loserPlayerObject.gameboard.targetedTiles.length - 20}/${loserPlayerObject.gameboard.targetedTiles.length}`;
 		missedHitsNum.classList.add("statNum");
+		missedHitsNum.classList.add("animate__animated");
+		missedHitsNum.classList.add("animate__backInRight");
 		stats.appendChild(missedHitsNum);
 
 		const ownShipTilesLeftText = document.createElement("div");
@@ -346,6 +350,8 @@ export default class Interface {
 		for (let i = 0; i < winnerPlayerObject.gameboard.ships.length; i++) ownShipTilesLeftCount -= winnerPlayerObject.gameboard.ships[i].hitTiles.length;
 		ownShipTilesLeftNum.textContent = `${ownShipTilesLeftCount}`;
 		ownShipTilesLeftNum.classList.add("statNum");
+		ownShipTilesLeftNum.classList.add("animate__animated");
+		ownShipTilesLeftNum.classList.add("animate__backInRight");
 		stats.appendChild(ownShipTilesLeftNum);
 		this.right.appendChild(stats);
 
@@ -364,6 +370,8 @@ export default class Interface {
 		const textBubble = document.createElement("div");
 		textBubble.textContent = "Good job, commander!";
 		textBubble.classList.add("textBubble");
+		textBubble.classList.add("animate__animated");
+		textBubble.classList.add("animate__slideInLeft");
 		stats.appendChild(textBubble);
 	}
 
