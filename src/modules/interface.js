@@ -1,5 +1,6 @@
 import Player from "./player";
 import FoxgirlImage from "../imgs/fox_girl.webp";
+import 'animate.css';
 
 export default class Interface {
 
@@ -225,9 +226,22 @@ export default class Interface {
 				tile.dataset.i = i;
 				tile.dataset.j = j;
 
-				const ifTargeted = this.player.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
-				if (ifTargeted && this.player.gameboard.isShipTile([i, j])) tile.classList.add("hit");
-				else if (ifTargeted) tile.classList.add("miss");
+				const ifTargetedIndex = this.player.gameboard.targetedTiles.findIndex((coord) => coord[0] === i && coord[1] === j);
+				const ifTargeted = ifTargetedIndex !== -1;
+				if (ifTargeted && this.player.gameboard.isShipTile([i, j])) {
+					tile.classList.add("hit");
+					if (ifTargetedIndex === this.player.gameboard.targetedTiles.length - 1 && turn === "opponent") {
+						tile.classList.add("animate__animated");
+						tile.classList.add("animate__heartBeat");
+					}
+				}
+				else if (ifTargeted) {
+					tile.classList.add("miss");
+					if (ifTargetedIndex === this.player.gameboard.targetedTiles.length - 1 && turn === "player" && !this.opponent.gameboard.isShipTile(this.opponent.gameboard.targetedTiles[this.opponent.gameboard.targetedTiles.length - 1])) {
+						tile.classList.add("animate__animated");
+						tile.classList.add("animate__flash");
+					}
+				}
 
 				if (turn === "opponent" && this.opponent.type === "human") {
 					tile.addEventListener("click", (event) => {
@@ -249,9 +263,22 @@ export default class Interface {
 				tile.dataset.i = i;
 				tile.dataset.j = j;
 
-				const ifTargeted = this.opponent.gameboard.targetedTiles.find((coord) => coord[0] === i && coord[1] === j) !== undefined;
-				if (ifTargeted && this.opponent.gameboard.isShipTile([i, j])) tile.classList.add("hit");
-				else if (ifTargeted) tile.classList.add("miss");
+				const ifTargetedIndex = this.opponent.gameboard.targetedTiles.findIndex((coord) => coord[0] === i && coord[1] === j);
+				const ifTargeted = ifTargetedIndex !== -1;
+				if (ifTargeted && this.opponent.gameboard.isShipTile([i, j])) {
+					tile.classList.add("hit");
+					if (ifTargetedIndex === this.opponent.gameboard.targetedTiles.length - 1 && turn === "player") {
+						tile.classList.add("animate__animated");
+						tile.classList.add("animate__heartBeat");
+					}
+				}
+				else if (ifTargeted) {
+					tile.classList.add("miss");
+					if (ifTargetedIndex === this.opponent.gameboard.targetedTiles.length - 1 && turn === "opponent" && !this.player.gameboard.isShipTile(this.player.gameboard.targetedTiles[this.player.gameboard.targetedTiles.length - 1])) {
+						tile.classList.add("animate__animated");
+						tile.classList.add("animate__flash");
+					}
+				}
 
 				if (turn === "player" && this.player.type === "human") {
 					tile.addEventListener("click", (event) => {
