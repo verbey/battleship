@@ -4,6 +4,7 @@
   "description": "[Battleship project](https://www.theodinproject.com/lessons/node-path-javascript-battleship) from The Odin Project.",
   "main": "babel.config.js",
   "scripts": {
+    "build": "webpack",
     "test": "jest"
   },
   "keywords": [],
